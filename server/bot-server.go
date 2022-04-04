@@ -36,8 +36,8 @@ func UploadImgur(stream io.ReadCloser) *model.ImgurRespones {
 	part, _ := writer.CreateFormFile("image", "temp")
 	io.Copy(part, stream)
 
-	writer.Close()
-	stream.Close()
+	defer writer.Close()
+	defer stream.Close()
 
 	req, _ := http.NewRequest("POST", "https://api.imgur.com/3/image", buf)
 	req.Header.Set("Content-Type", writer.FormDataContentType())
