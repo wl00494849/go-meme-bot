@@ -37,7 +37,9 @@ func memeImageUpload(evn *linebot.Event, msg *linebot.ImageMessage) {
 		imgurRes := server.UploadImgur(res.Content)
 		err := server.InsertImageMessage(data, imgurRes)
 
-		if err == nil {
+		if err != nil {
+			bot.ReplyMessage(evn.ReplyToken, linebot.NewTextMessage("上傳失敗")).Do()
+		} else {
 			bot.ReplyMessage(evn.ReplyToken, linebot.NewTextMessage("上傳成功! 輸入關鍵字#"+data.KeyWord+",即可使用")).Do()
 		}
 	}
