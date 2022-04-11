@@ -14,7 +14,7 @@ func GetDB() *sql.DB {
 	return db
 }
 
-func DBInit() {
+func DBInit() error {
 
 	config := mysql.Config{
 		User:                 os.Getenv("MYSQL_USER"),
@@ -38,8 +38,10 @@ func DBInit() {
 	err := d.Ping()
 
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	db = d
+
+	return nil
 }
