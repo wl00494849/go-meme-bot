@@ -47,4 +47,3 @@ func (cache *redisBotTextCache) Get(key string) *model.UserKeyWord {
 func (cache *redisBotTextCache) Del(key string) {
 	cache.getClient().Del(key)
 }
-

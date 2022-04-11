@@ -6,6 +6,7 @@ type PostCache struct {
 type ManagerCache interface {
 	Set(key string, value interface{})
 	Get(key string) *interface{}
+	Del(key string)
 }
 
 func NewPostCache(m ManagerCache) *PostCache {
@@ -18,4 +19,7 @@ func (p *PostCache) Set(key string, value interface{}) {
 
 func (p *PostCache) Get(key string) *interface{} {
 	return p.mc.Get(key)
+}
+func (p *PostCache) Del(key string) {
+	p.mc.Del(key)
 }

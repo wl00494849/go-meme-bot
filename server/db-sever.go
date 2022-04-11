@@ -7,20 +7,9 @@ import (
 )
 
 func InsertImageMessage(user *model.UserKeyWord, image *model.ImgurRespones) error {
-
 	conn := database.GetDB()
-
-	imgMsg := &model.ImageData{
-		UserId:     user.UserId,
-		KeyWord:    user.KeyWord,
-		ImageUrl:   image.Data.Link,
-		CreateTime: time.Now(),
-	}
-
 	stmt, _ := conn.Prepare("Insert ImageMessage set userId=?,keyWord=?,imageUrl=?,createTime=?")
-
-	_, err := stmt.Exec(imgMsg.UserId, imgMsg.KeyWord, imgMsg.ImageUrl, imgMsg.CreateTime)
-
+	_, err := stmt.Exec(user.UserId, user.KeyWord, image.Data.Link, time.Now())
 	return err
 }
 
