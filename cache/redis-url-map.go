@@ -33,16 +33,20 @@ func (cache *redisImageMapCache) getClient() *redis.Client {
 
 func (cache *redisImageMapCache) Set(key string, value map[string]string) {
 	json, _ := json.Marshal(value)
-	cache.getClient().Set(key+"-imageTemp", json, cache.expires)
+	cache.getClient().Set(imageTempKey(key), json, cache.expires)
 }
 
 func (cache *redisImageMapCache) Get(key string) map[string]string {
 	m := make(map[string]string)
-	val, _ := cache.getClient().Get(key + "-imageTemp").Bytes()
+	val, _ := cache.getClient().Get(imageTempKey(key)).Bytes()
 	json.Unmarshal(val, &m)
 	return m
 }
 
 func (cache *redisImageMapCache) Del(key string) {
-	cache.getClient().Del(key + "-imageTemp")
+	cache.getClient().Del(imageTempKey(key))
+}
+
+func imageTempKey(key string) string {
+	return key + "-imageTemp"
 }

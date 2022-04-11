@@ -72,8 +72,15 @@ func SearchUrl(userId string) map[string]string {
 }
 
 func GetKeyWordList(userId string) string {
-	str := "MeMe清單: \n"
 	m := SearchUrl(userId)
+	if len(m) > 0 {
+		return keyWordListStr(m)
+	}
+	return "尚未儲存任何圖片"
+}
+
+func keyWordListStr(m map[string]string) string {
+	str := "MeMe清單: \n"
 	for key := range m {
 		str += "#" + key + "\n"
 	}
